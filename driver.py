@@ -231,7 +231,7 @@ if __name__ == '__main__':
     # Convert board string into 2D array
     board_str = args.board
     board = [list(row) for row in board_str.split()]
-    print(board)
+    print("board",board)
     for x in range(4):
         for y in range(4):
             board3D[x][y].config(text= board[x][y])
