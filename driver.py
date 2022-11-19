@@ -12,6 +12,7 @@ import trie
 import argparse
 import time
 
+iteration = 0
 """
 get_neighbors: returns a list of tuples corresponding to the (r, c) coordinates 
 of those cells within the input board around the cell at (row, col). Takes
@@ -53,6 +54,8 @@ that maintains cells that have already been visited in this branch
 @return: list
 """
 def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, showWord):
+    global iteration
+    iteration += 1
     min_word_len = 3
     output_words = []
 
@@ -85,6 +88,51 @@ def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, s
     root.update()
     return output_words
 
+
+def recursive_heuristic_solve(board, vocab_trie, visited, row, col, word, board3D, root, showWord):
+    global iteration
+    iteration += 1
+    min_word_len = 3
+    output_words = []
+
+    visited[row][col] = True
+    board3D[row][col].config(bg= "gray51")
+    root.update()
+    # time.sleep(0.1)
+    word = word + board[row][col]
+    prefix = vocab_trie.is_valid(word)
+    if len(word) >= min_word_len and prefix == 0:
+        showWord.config(text= word)
+        output_words.append(word)
+        root.update()
+        time.sleep(1)
+        showWord.config(text= "")
+        root.update()
+    # if prefix >= 0:
+    if len(word) <= 5:
+        neighbors = get_neighbors(board, row, col)
+
+        sorted_neighbors = sorted(neighbors, key=lambda cord: vocab_trie.get_prob(word + board[cord[0]][cord[1]]), reverse=True);
+
+        for neighbor in sorted_neighbors:
+
+            new_row = neighbor[0]
+            new_col = neighbor[1]
+
+            if (vocab_trie.get_prob(word + board[new_row][new_col])) <= 0:
+                continue
+
+            if not visited[new_row][new_col]:
+                output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, new_row, new_col, word, board3D, root, showWord)
+
+    # backtrack
+    word = word[:-1]
+    visited[row][col] = False
+    board3D[row][col].config(bg= "white")
+    root.update()
+    return output_words
+
+
 """
 solve: function to run the boggle word finder using DFS on an input board 
 (storing a dictionary of valid words as a Trie). Returns list of 
@@ -95,6 +143,7 @@ all the output_words found in the board.
 @return: list
 """
 def solve(board, vocab_trie, board3D, root, showWord, showListWord):
+    global iteration
     M, N = len(board), len(board[0])
     visited = [[False for i in range(N)] for j in range(M)]
 
@@ -102,6 +151,7 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
     for row in range(M):
         for col in range(N):
             output_words = output_words + recursive_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
+            # output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
     print(output_words)
     listWord = ""
     wordCount = 0
@@ -114,6 +164,9 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
             listWord = listWord + "\n"
             wordCount = 0
     showListWord.config(text=listWord)
+
+    print("Iteration usage ", iteration)
+    iteration = 0
     return output_words
 
 """
@@ -151,7 +204,7 @@ Boggle board and a txt file containing a dictionary of valid words.
 def get_args():
     my_parser = argparse.ArgumentParser()
     my_parser.add_argument("-b", "--board", default = "rael mofs teok nati", type=str, help='board represented as a string with spaces between each row')
-    my_parser.add_argument("-v", "--vocab", default = "dictionary.txt", type=str, help='txt file of vocabulary with each valid word on a new line')
+    my_parser.add_argument("-v", "--vocab", default = "AI_word_search\dictionary\AI_BRILL_NEW.txt", type=str, help='txt file of vocabulary with each valid word on a new line')
     args = my_parser.parse_args()
     return args
 
