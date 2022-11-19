@@ -132,7 +132,7 @@ def construct_vocab_trie(board, vocab_file):
     
     full_vocab = vocab.load_dictionary(vocab_file)
     active_vocab = vocab.reduce_vocab(full_vocab, alphabet)
-    
+
     # store vocab as trie for optimized checking if word is in the dictionary
     vocab_trie = trie.Trie(alphabet)
     vocab_trie.construct(active_vocab)

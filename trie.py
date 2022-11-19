@@ -15,14 +15,17 @@ Class that specifies one node on a Trie with its associated variables
 - children: a list of nodes pointing to children TrieNodes of this TrieNode
 """
 class TrieNode:
+    	
 	def __init__(self, char, alph_len):
 	    # character associated with this Trie node
-	    self.char = char
+		self.char = char
 	    # flag for if a valid word ends at this node
-	    self.eow = False
+		self.eow = False
 	    # list of children nodes for next character from this character,
 	    # initialized to an empty list
-	    self.children = [None]*alph_len
+		self.children = [None]*alph_len
+		# dynamic count for total children leaf use to calculate prob
+		self.leafs = 1
 
 """
 Trie 
@@ -61,6 +64,7 @@ class Trie:
 		for char in word:
 			idx = self.idx_dict[char]
 			next_node = curr_node.children[idx]
+			curr_node.leafs += 1
 			if next_node == None:
 				added_node = TrieNode(char, len(self.alphabet))
 				curr_node.children[idx] = added_node
@@ -100,3 +104,22 @@ class Trie:
 			return 0
 		return 1
 
+	def get_prefix_leafs(self, prefix):
+		curr_node = self.root
+		for char in prefix:
+			idx = self.idx_dict[char]
+			if curr_node.children[idx] == None:
+				return -1
+			else:
+				curr_node = curr_node.children[idx]
+		
+		if curr_node == None:
+			return 0
+		else:
+			return curr_node.leafs
+
+	def get_prob(self, prefix):
+		return round(float(self.get_prefix_leafs(prefix) / self.get_total_word()), 2)
+
+	def get_total_word(self):
+		return self.root.leafs
