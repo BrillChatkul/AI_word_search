@@ -11,6 +11,8 @@ import vocab
 import trie
 import argparse
 import time
+import datetime
+from guppy import hpy
 
 iteration = 0
 """
@@ -69,11 +71,11 @@ def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, s
         showWord.config(text= word)
         output_words.append(word)
         root.update()
-        time.sleep(1)
+        # time.sleep(1)
         showWord.config(text= "")
         root.update()
     # if prefix >= 0:
-    if len(word) <= 5:
+    if len(word) <= 15:
         neighbors = get_neighbors(board, row, col)
         for neighbor in neighbors:
             new_row = neighbor[0]
@@ -105,25 +107,24 @@ def recursive_heuristic_solve(board, vocab_trie, visited, row, col, word, board3
         showWord.config(text= word)
         output_words.append(word)
         root.update()
-        time.sleep(1)
+        # time.sleep(1)
         showWord.config(text= "")
         root.update()
-    # if prefix >= 0:
-    if len(word) <= 5:
-        neighbors = get_neighbors(board, row, col)
 
-        sorted_neighbors = sorted(neighbors, key=lambda cord: vocab_trie.get_prob(word + board[cord[0]][cord[1]]), reverse=True);
+    neighbors = get_neighbors(board, row, col)
 
-        for neighbor in sorted_neighbors:
+    sorted_neighbors = sorted(neighbors, key=lambda cord: vocab_trie.get_prob(word + board[cord[0]][cord[1]]), reverse=True);
 
-            new_row = neighbor[0]
-            new_col = neighbor[1]
+    for neighbor in sorted_neighbors:
 
-            if (vocab_trie.get_prob(word + board[new_row][new_col])) <= 0:
-                continue
+        new_row = neighbor[0]
+        new_col = neighbor[1]
 
-            if not visited[new_row][new_col]:
-                output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, new_row, new_col, word, board3D, root, showWord)
+        if (vocab_trie.get_prob(word + board[new_row][new_col])) <= 0:
+            continue
+
+        if not visited[new_row][new_col]:
+            output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, new_row, new_col, word, board3D, root, showWord)
 
     # backtrack
     word = word[:-1]
@@ -142,7 +143,10 @@ all the output_words found in the board.
 @param: Trie - vocab_trie: Trie of the active vocabulary
 @return: list
 """
+@profile
 def solve(board, vocab_trie, board3D, root, showWord, showListWord):
+    # Matrics
+    a = datetime.datetime.now()
     global iteration
     M, N = len(board), len(board[0])
     visited = [[False for i in range(N)] for j in range(M)]
@@ -150,8 +154,8 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
     output_words = []
     for row in range(M):
         for col in range(N):
-            output_words = output_words + recursive_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
-            # output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
+            # output_words = output_words + recursive_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
+            output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
     print(output_words)
     listWord = ""
     wordCount = 0
@@ -165,7 +169,12 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
             wordCount = 0
     showListWord.config(text=listWord)
 
+    # Metrics
+    b = datetime.datetime.now()
+    c = b - a
+    print(len(output_words), " Words Found.")
     print("Iteration usage ", iteration)
+    print("Time usage", c.microseconds / 1000, " ms.")
     iteration = 0
     return output_words
 
@@ -189,6 +198,7 @@ def construct_vocab_trie(board, vocab_file):
     # store vocab as trie for optimized checking if word is in the dictionary
     vocab_trie = trie.Trie(alphabet)
     vocab_trie.construct(active_vocab)
+    
     return vocab_trie
 
 """
@@ -203,22 +213,22 @@ Boggle board and a txt file containing a dictionary of valid words.
 """
 def get_args():
     my_parser = argparse.ArgumentParser()
-    my_parser.add_argument("-b", "--board", default = "rael mofs teok nati", type=str, help='board represented as a string with spaces between each row')
-    my_parser.add_argument("-v", "--vocab", default = "AI_word_search\dictionary\AI_BRILL_NEW.txt", type=str, help='txt file of vocabulary with each valid word on a new line')
+    my_parser.add_argument("-b", "--board", default = "raefl mofse teokz natiw defsd", type=str, help='board represented as a string with spaces between each row')
+    my_parser.add_argument("-v", "--vocab", default = "AI_word_search\dictionary\dictionary.txt", type=str, help='txt file of vocabulary with each valid word on a new line')
     args = my_parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     root = tkinter.Tk()
-    root.geometry("320x600")
+    root.geometry("420x600")
 
     board3D=[]
     frame1 = tkinter.Frame(root)
     frame1.grid(row=0,column=0)
-    for x in range(4):
+    for x in range(5):
         boardRow=[]
-        for y in range(4):
+        for y in range(5):
             label = tkinter.Label(frame1, text="-", relief=tkinter.RIDGE, borderwidth=1.5, font=("Arial",18), width=5, height=2)
             label.grid(row=x,column=y)
             boardRow.append(label)
@@ -232,8 +242,8 @@ if __name__ == '__main__':
     board_str = args.board
     board = [list(row) for row in board_str.split()]
     print("board",board)
-    for x in range(4):
-        for y in range(4):
+    for x in range(5):
+        for y in range(5):
             board3D[x][y].config(text= board[x][y])
     
     vocab_file = args.vocab
