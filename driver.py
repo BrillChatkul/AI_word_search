@@ -60,23 +60,24 @@ def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, s
     board3D[row][col].config(bg= "gray51")
     root.update()
     # time.sleep(0.1)
+    nodeHeuristicCheck = heuristic(board, word, row, col, visited)
     word = word + board[row][col]
-    prefix = vocab_trie.is_valid(word)
-    if len(word) >= min_word_len and prefix == 0:
+    
+    if len(word) >= min_word_len and nodeHeuristicCheck == 0:
         showWord.config(text= word)
         output_words.append(word)
         root.update()
         time.sleep(1)
         showWord.config(text= "")
         root.update()
-    # if prefix >= 0:
-    if len(word) <= 5:
-        neighbors = get_neighbors(board, row, col)
-        for neighbor in neighbors:
-            new_row = neighbor[0]
-            new_col = neighbor[1]
-            if not visited[new_row][new_col]:
-                output_words = output_words + recursive_solve(board, vocab_trie, visited, new_row, new_col, word, board3D, root, showWord)
+
+    neighbors = get_neighbors(board, row, col)
+    for neighbor in neighbors:
+        new_row = neighbor[0]
+        new_col = neighbor[1]
+        heuristic_check = heuristic(board, word, new_row, new_col, visited)
+        if not visited[new_row][new_col] and heuristic_check <= 1:
+            output_words = output_words + recursive_solve(board, vocab_trie, visited, new_row, new_col, word, board3D, root, showWord)
 
     # backtrack
     word = word[:-1]
@@ -84,6 +85,23 @@ def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, s
     board3D[row][col].config(bg= "white")
     root.update()
     return output_words
+
+def heuristic(board, word, row, col, visited):
+    check_word = word + board[row][col]
+    heuristic_score = vocab_trie.is_valid(check_word)
+    if heuristic_score == 0:
+        return 0
+    elif heuristic_score == 1:
+        neighbors = get_neighbors(board, row, col)
+        for neighbor in neighbors:
+            new_row = neighbor[0]
+            new_col = neighbor[1]
+            newWordPrefix = check_word + board[new_row][new_col]
+            if not visited[new_row][new_col] and vocab_trie.is_valid(newWordPrefix) >= 0:
+                return 1
+        return 2
+    else:
+        return 2
 
 """
 solve: function to run the boggle word finder using DFS on an input board 
