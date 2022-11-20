@@ -75,7 +75,7 @@ def recursive_solve(board, vocab_trie, visited, row, col, word, board3D, root, s
         showWord.config(text= "")
         root.update()
     # if prefix >= 0:
-    if len(word) <= 15:
+    if len(word) <= 6:
         neighbors = get_neighbors(board, row, col)
         for neighbor in neighbors:
             new_row = neighbor[0]
@@ -156,7 +156,7 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
         for col in range(N):
             # output_words = output_words + recursive_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
             output_words = output_words + recursive_heuristic_solve(board, vocab_trie, visited, row, col, "", board3D, root, showWord)
-    print(output_words)
+    # print(output_words)
     listWord = ""
     wordCount = 0
     for i in output_words:
@@ -175,6 +175,7 @@ def solve(board, vocab_trie, board3D, root, showWord, showListWord):
     print(len(output_words), " Words Found.")
     print("Iteration usage ", iteration)
     print("Time usage", c.microseconds / 1000, " ms.")
+    print("Time usage", c.seconds, " s.")
     iteration = 0
     return output_words
 
@@ -190,14 +191,22 @@ that appear in the board, and populates and returns a Trie with that reduced dic
 def construct_vocab_trie(board, vocab_file):
     # flatten 2 dimensional board into single list of characters and remove duplicates to create 
     # an alphabet of all the characters seen on the board
-    alphabet = list(set([ch for row in board for ch in row]))
+    # alphabet = list(set([ch for row in board for ch in row]))
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     
     full_vocab = vocab.load_dictionary(vocab_file)
     active_vocab = vocab.reduce_vocab(full_vocab, alphabet)
 
     # store vocab as trie for optimized checking if word is in the dictionary
     vocab_trie = trie.Trie(alphabet)
-    vocab_trie.construct(active_vocab)
+    vocab_trie.construct(full_vocab)
+
+    print("a", vocab_trie.get_prob('a'))
+    print("b", vocab_trie.get_prob('b'))
+    print("c", vocab_trie.get_prob('c'))
+    print("aa", vocab_trie.get_prob('aa'))
+    print("ab", vocab_trie.get_prob('ab'))
+    print("ac", vocab_trie.get_prob('ac'))
     
     return vocab_trie
 
@@ -241,7 +250,7 @@ if __name__ == '__main__':
     # Convert board string into 2D array
     board_str = args.board
     board = [list(row) for row in board_str.split()]
-    print("board",board)
+    # print("board",board)
     for x in range(5):
         for y in range(5):
             board3D[x][y].config(text= board[x][y])
