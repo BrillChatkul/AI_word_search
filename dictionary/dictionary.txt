@@ -3312,7 +3312,7 @@ aimlessly
 aimlessness
 aims
 ain
-ain't
+aint
 aine
 ainee
 aintree
@@ -8294,7 +8294,7 @@ arefaction
 arefy
 areg
 aren
-aren't
+arent
 arena
 arenaceous
 arenaria
@@ -22192,7 +22192,7 @@ camstone
 camstones
 camus
 can
-can't
+cant
 canaan
 canaanite
 canaanites
@@ -35428,7 +35428,7 @@ coughing
 coughings
 coughs
 could
-couldn't
+couldnt
 coulee
 coulees
 coulibiaca
@@ -41718,7 +41718,7 @@ demolishing
 demolishment
 demolishments
 demolition
-demolition's
+demolitions
 demolitionist
 demolitionists
 demolitions
@@ -41903,7 +41903,7 @@ denationalised
 denationalises
 denationalising
 denationalization
-denationalization's
+denationalizations
 denationalize
 denationalized
 denationalizes
@@ -44365,7 +44365,7 @@ didicoi
 didicois
 didicoy
 didicoys
-didn't
+didnt
 dido
 didoes
 didos
@@ -47837,7 +47837,7 @@ doer
 doers
 does
 doeskin
-doesn't
+doesnt
 doest
 doeth
 doff
@@ -48163,7 +48163,7 @@ domo
 domos
 domy
 don
-don't
+dont
 dona
 donah
 donahs
@@ -54274,8 +54274,8 @@ entozoa
 entozoal
 entozoic
 entozoon
-entr'acte
-entr'actes
+entracte
+entractes
 entrail
 entrails
 entrain
@@ -72184,7 +72184,7 @@ hadji
 hadjis
 hadlee
 hadley
-hadn't
+hadnt
 hadrian
 hadrome
 hadron
@@ -73384,7 +73384,7 @@ hask
 haslemere
 haslet
 haslets
-hasn't
+hasnt
 hasp
 hasped
 hasping
@@ -73582,7 +73582,7 @@ havel
 havelock
 havelocks
 haven
-haven't
+havent
 havened
 havening
 havens
@@ -73743,9 +73743,9 @@ hazlitt
 hazri
 hazy
 he
-he'd
-he'll
-he's
+hed
+hell
+hes
 head
 headache
 headaches
@@ -79099,10 +79099,10 @@ hythe
 hythes
 hywel
 i
-i'd
-i'll
-i'm
-i've
+id
+ill
+im
+ive
 iachimo
 iago
 iai
@@ -86222,7 +86222,7 @@ ismatical
 ismaticalness
 isms
 ismy
-isn't
+isnt
 iso
 isoagglutination
 isoagglutinin
@@ -86488,9 +86488,9 @@ isthmuses
 istiophorus
 istle
 it
-it'd
-it'll
-it's
+itd
+itll
+its
 ita
 itacism
 itacolumite
@@ -99220,7 +99220,7 @@ mayhap
 mayhem
 maying
 mayings
-mayn't
+maynt
 mayo
 mayologist
 mayologists
@@ -106694,7 +106694,7 @@ mustier
 mustiest
 mustily
 mustiness
-mustn't
+mustnt
 musts
 musty
 mutability
@@ -110971,7 +110971,7 @@ nystagmus
 nystatin
 nyx
 o
-o'clock
+oclock
 oaf
 oafish
 oafs
@@ -114154,7 +114154,7 @@ oudenaarde
 oudenarde
 oudenardes
 ought
-oughtn't
+oughtnt
 oughtness
 oughts
 ouija
@@ -150386,7 +150386,7 @@ shams
 shamus
 shamuses
 shan
-shan't
+shant
 shanachie
 shanachies
 shandean
@@ -150574,8 +150574,8 @@ shays
 shchi
 shchis
 she
-she'd
-she'll
+shed
+shell
 shea
 sheading
 sheadings
@@ -151417,7 +151417,7 @@ shouldering
 shoulderings
 shoulders
 shouldest
-shouldn't
+shouldnt
 shouldst
 shout
 shouted
@@ -160217,7 +160217,7 @@ sterilises
 sterilising
 sterility
 sterilization
-sterilization's
+sterilizations
 sterilizations
 sterilize
 sterilized
@@ -169846,7 +169846,7 @@ thannas
 thar
 thars
 that
-that's
+thats
 thataway
 thatch
 thatched
@@ -170177,7 +170177,7 @@ theravada
 therblig
 therbligs
 there
-there's
+theres
 thereabout
 thereabouts
 thereafter
@@ -170389,10 +170389,10 @@ thewless
 thews
 thewy
 they
-they'd
-they'll
-they're
-they've
+theyd
+theyll
+theyre
+theyve
 thiamin
 thiamine
 thiasus
@@ -189392,7 +189392,7 @@ washtub
 washy
 wasm
 wasms
-wasn't
+wasnt
 wasp
 waspier
 waspiest
@@ -189708,10 +189708,10 @@ wazir
 wazirs
 wc
 we
-we'd
-we'll
-we're
-we've
+wed
+well
+were
+weve
 wea
 weak
 weaken
@@ -190143,7 +190143,7 @@ wept
 were
 weregild
 weregilds
-weren't
+werent
 werewolf
 werewolfish
 werewolfism
@@ -191850,7 +191850,7 @@ womenkind
 womera
 womeras
 won
-won't
+wont
 wonder
 wonderbra
 wonderbras
@@ -192289,7 +192289,7 @@ wou
 woubit
 woubits
 would
-wouldn't
+wouldnt
 wouldst
 woulfe
 wound
@@ -193429,10 +193429,10 @@ yorubas
 yos
 yosemite
 you
-you'd
-you'll
-you're
-you've
+youd
+youll
+youre
+youve
 youk
 youked
 youking

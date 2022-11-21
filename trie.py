@@ -109,7 +109,7 @@ class Trie:
 		for char in prefix:
 			idx = self.idx_dict[char]
 			if curr_node.children[idx] == None:
-				return -1
+				return 0
 			else:
 				curr_node = curr_node.children[idx]
 		
@@ -119,7 +119,7 @@ class Trie:
 			return curr_node.leafs
 
 	def get_prob(self, prefix):
-		return round(float(self.get_prefix_leafs(prefix) / self.get_total_word()), 2)
+		return round(float(self.get_prefix_leafs(prefix) / self.get_total_word()), 8)
 
 	def get_total_word(self):
 		return self.root.leafs
